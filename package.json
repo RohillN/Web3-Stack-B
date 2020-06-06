@@ -10,6 +10,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
     "body-parser": "^1.0.2",
     "concurrently": "^5.2.0",
     "cookie-parser": "~1.0.1",
