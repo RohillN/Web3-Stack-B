@@ -8,7 +8,7 @@ function App() {
   const [countries, getCountries] = useState([]);
 
   useEffect(() => {
-    fetch("/getcountries").then(res => 
+    fetch("/getcountries").then(res =>
       res.json().then(data => {
         getCountries(data);
       })
@@ -20,11 +20,8 @@ function App() {
       <AppNavbar />
       <Container fluid>
         <Row>
-          <Col className="text-center mt-5"><h1>Welcome Page</h1>
-            <Button variant="contained" color="primary" onClick={console.log("test")}>
-              Click Me
-            </Button>
-            <Countries countries={countries}/>
+          <Col className="text-center mt-5">
+            <Countries countries={countries} />
           </Col>
         </Row>
       </Container>
