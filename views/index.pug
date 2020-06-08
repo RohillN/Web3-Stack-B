@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p #[a(href="/about") About]
+  p #[a(href="/countries") Countries]
+  p #[a(href="/countries/add") Countries Add]
+  p #[a(href="/countries/edit") Countries Edit]
+  p #[a(href="/countries/delete") Countries Delete]
+  #like_button_container
+  script(src="https://unpkg.com/react@16/umd/react.development.js" crossorigin)
+  script(src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin)
+  script(src="/javascripts/like_button.js")
