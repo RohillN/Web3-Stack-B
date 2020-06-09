@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('test-app:server');
+var debug = require('debug')('web3-stack-b:server');
 var http = require('http');
 
 /**
