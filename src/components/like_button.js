@@ -1,5 +1,7 @@
 'use strict';
 
+import { Button } from "reactstrap";
+
 class LikeButton extends React.Component {
     constructor(props) {
         super(props);
@@ -12,12 +14,11 @@ class LikeButton extends React.Component {
         }
 
         return (
-            <button onClick={() => this.setState({ liked: true })}>
+            <Button color="danger" onClick={() => this.setState({ liked: true })}>
                 Like
-            </button>
+            </Button>
         );
     }
 }
 
-let domContainer = document.querySelector('#like_button_container');
-ReactDOM.render(<LikeButton />, domContainer);
+export default LikeButton;
