@@ -1,13 +1,15 @@
 import React from 'react';
 import LikeButton from './components/like_button';
 import AppNavbar from './components/appnavbar';
+import Countries from './components/countries';
 
 function App() {
-    
-    return(
+
+    return (
         <div>
-        <AppNavbar />
-        <LikeButton />
+            <AppNavbar />
+            <LikeButton />
+            <Countries />
         </div>
     );
 }

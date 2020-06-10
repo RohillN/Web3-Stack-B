@@ -8,6 +8,7 @@
     "deploy": "npm run build & npm start",
     "build": "webpack"
   },
+  "proxy": "http://127.0.0.1:5000",
   "dependencies": {
     "amdefine": "^1.0.1",
     "babel-preset-react-app": "^3.1.2",
