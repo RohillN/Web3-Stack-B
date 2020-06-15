@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form, FormGroup, Label, Button, Input } from 'reactstrap';
 
 class Countries extends React.Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class Countries extends React.Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        countries: result.name
+                        countries: result
                     });
                 },
                 // Note: it's important to handle errors here
@@ -40,13 +41,22 @@ class Countries extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (
-                <ul>
-                    {countries.map(country => (
-                        <li key={country.name}>
-                            {country.name}
-                        </li>
-                    ))}
-                </ul>
+                <Form>
+                    <FormGroup>
+                        <Label for="select-name">Select Country</Label>
+                        <Input type="select" name="country-name" id="country-name">
+                            <option value="all"></option>
+                            {countries.map(country => {
+                                return (
+                                    <option key={country.name} value={country.name}>
+                                        {country.name}
+                                    </option>
+                                )
+                            })}
+                        </Input>
+                    </FormGroup>
+                    <Button>Submit</Button>
+                </Form>
             );
         }
     }

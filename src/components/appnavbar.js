@@ -30,18 +30,6 @@ const AppNavbar = (props) => {
                             <NavLink href="/">Home</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="/countries">Countries</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="/countries/add">Countries Add</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="/countries/edit">Countries Edit</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="/countries/delete">Countries Delete</NavLink>
-                        </NavItem>
-                        <NavItem>
                             <NavLink href="/about">About</NavLink>
                         </NavItem>
                     </Nav>
