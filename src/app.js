@@ -9,7 +9,9 @@ function App() {
         <div>
             <AppNavbar />
             {/* <LikeButton /> */}
+            <div className="container">
             <Countries />
+            </div>
         </div>
     );
 }

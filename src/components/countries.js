@@ -15,18 +15,26 @@ class Countries extends React.Component {
         this.specificCountry = {
             errorSingle: null,
             isLoadedSingle: false,
-            countryObject: []
+            countryObject: null
         }
-
 
         this.userInput = {
             value: "all",
             canShow: false
         }
 
+        this.addCountry = {
+            value: "",
+            canPost: false
+        }
+
         this.handleSelection = this.handleSelection.bind(this);
         this.handleChangeInput = this.handleChangeInput.bind(this);
-        this.handleDelete = this.handleDeleteInput.bind(this);
+        this.handleDelete = this.fetchDeleteCountry.bind(this);
+        this.handlePost = this.fetchPostCountry.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
+
+        this.buttonclicked = false;
     }
 
     componentDidMount() {
@@ -83,7 +91,7 @@ class Countries extends React.Component {
             }
             else {
                 ReactDOM.render(
-                    <div><p key={this.specificCountry.countryObject.name}>{JSON.stringify(this.specificCountry.countryObject)}</p>
+                    <div><p key={this.specificCountry.countryObject.name}>{JSON.stringify(this.specificCountry.countryObject)}</p><hr></hr>
                     </div>,
                     document.getElementById('showSingle')
                 );
@@ -101,12 +109,53 @@ class Countries extends React.Component {
                         </Input>
                     </FormGroup>
                     <Button color="danger" onClick={this.handleDelete}>Delete</Button>
-                </Form></div>,
+                </Form>
+            </div>,
             document.getElementById('deleteSection')
         );
     }
 
-    handleDeleteInput() {
+    createPostInputs() {
+        ReactDOM.render(
+            <div>
+                <hr></hr>
+                <Form>
+                    <FormGroup>
+                        <Input type="text" onChange={this.handleTextChange} name="name" id="name"></Input>
+                    </FormGroup>
+                    <Button color="warning" id="submit" name="submit" onClick={this.handlePost}>Add Country</Button>
+                </Form>
+            </div>,
+            document.getElementById('postCountry')
+        );
+    }
+
+    handleTextChange(e) {
+        // e.preventDefault();
+        this.addCountry.value = e.target.value;
+        if (this.addCountry.value != null) {
+            this.addCountry.canPost = true;
+        }
+        console.log(this.addCountry.value);
+    }
+
+    fetchPostCountry() {
+        const formData = new FormData();
+        formData.append('name', this.addCountry.value.toString());
+
+        console.log(this.addCountry.value.toString());
+
+        if (this.addCountry.canPost) {
+            console.log("posting this country");
+            console.log(this.addCountry.value);
+            fetch('http://127.0.0.1:5000/getcountries', {
+                method: 'POST',
+                body: formData
+            })
+        }
+    }
+
+    fetchDeleteCountry() {
         console.log("delete this country");
         console.log(this.specificCountry.countryObject.name);
         fetch('http://127.0.0.1:5000/getcountries/' + this.specificCountry.countryObject.name, {
@@ -114,13 +163,9 @@ class Countries extends React.Component {
         })
             .then(res => res.text()) // or res.json() or res.text()
             .then(res => ReactDOM.render(
-                <div>Delete Status: {this.specificCountry.countryObject.name} <br></br>{res}</div>,
+                <div><p>Delete Status: {this.specificCountry.countryObject.name} <br></br>{res}</p></div>,
                 document.getElementById('deleteMessage')
-            ))
-            .then(
-                this.fetchAllData(),
-                this.handleSelection()
-            );
+            ));
     }
 
     fetchCountrySpecific() {
@@ -155,6 +200,7 @@ class Countries extends React.Component {
         else {
             return (
                 <div>
+                    {this.createPostInputs()}
                     <Form>
                         <FormGroup>
                             <Label for="select-name">Select Country</Label>
@@ -169,7 +215,7 @@ class Countries extends React.Component {
                                 })}
                             </Input>
                         </FormGroup>
-                        <Button onClick={this.handleSelection}>Submit</Button>
+                        <Button onClick={this.handleSelection}>Find Country</Button>
                     </Form>
                     <hr></hr>
                 </div>
