@@ -26,6 +26,7 @@ class Countries extends React.Component {
 
         this.handleSelection = this.handleSelection.bind(this);
         this.handleChangeInput = this.handleChangeInput.bind(this);
+        this.handleDelete = this.handleDeleteInput.bind(this);
     }
 
     componentDidMount() {
@@ -60,9 +61,10 @@ class Countries extends React.Component {
         console.log(this.userInput.canShow);
         if (this.specificCountry.isLoadedSingle) {
             this.displayCountry();
+            this.newDeleteOption();
         }
     }
-    
+
     handleChangeInput(e) {
         this.userInput.value = e.target.value;
         this.userInput.canShow = true;
@@ -80,13 +82,45 @@ class Countries extends React.Component {
                 );
             }
             else {
-
                 ReactDOM.render(
-                    <div><p>{JSON.stringify(this.specificCountry.countryObject)}</p></div>,
+                    <div><p key={this.specificCountry.countryObject.name}>{JSON.stringify(this.specificCountry.countryObject)}</p>
+                    </div>,
                     document.getElementById('showSingle')
                 );
             }
         }
+    }
+
+    newDeleteOption() {
+        ReactDOM.render(
+            <div>
+                <Form>
+                    <FormGroup>
+                        <Input type="select" name="countryDelete" id="countryDelete">
+                            <option key={this.specificCountry.countryObject.name} value={this.specificCountry.countryObject.name} placeholder={this.specificCountry.countryObject.name}>{this.specificCountry.countryObject.name}</option>
+                        </Input>
+                    </FormGroup>
+                    <Button color="danger" onClick={this.handleDelete}>Delete</Button>
+                </Form></div>,
+            document.getElementById('deleteSection')
+        );
+    }
+
+    handleDeleteInput() {
+        console.log("delete this country");
+        console.log(this.specificCountry.countryObject.name);
+        fetch('http://127.0.0.1:5000/getcountries/' + this.specificCountry.countryObject.name, {
+            method: 'DELETE',
+        })
+            .then(res => res.text()) // or res.json() or res.text()
+            .then(res => ReactDOM.render(
+                <div>Delete Status: {this.specificCountry.countryObject.name} <br></br>{res}</div>,
+                document.getElementById('deleteMessage')
+            ))
+            .then(
+                this.fetchAllData(),
+                this.handleSelection()
+            );
     }
 
     fetchCountrySpecific() {
@@ -137,6 +171,7 @@ class Countries extends React.Component {
                         </FormGroup>
                         <Button onClick={this.handleSelection}>Submit</Button>
                     </Form>
+                    <hr></hr>
                 </div>
             );
         }
