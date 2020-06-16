@@ -104,12 +104,14 @@ class Countries extends React.Component {
             <div>
                 <Form>
                     <FormGroup>
+                        <Label for="delete-name" className="h2">Delete Country</Label>
                         <Input type="select" name="countryDelete" id="countryDelete">
                             <option key={this.specificCountry.countryObject.name} value={this.specificCountry.countryObject.name} placeholder={this.specificCountry.countryObject.name}>{this.specificCountry.countryObject.name}</option>
                         </Input>
                     </FormGroup>
                     <Button color="danger" onClick={this.handleDelete}>Delete</Button>
                 </Form>
+                <hr></hr>
             </div>,
             document.getElementById('deleteSection')
         );
@@ -118,9 +120,9 @@ class Countries extends React.Component {
     createPostInputs() {
         ReactDOM.render(
             <div>
-                <hr></hr>
                 <Form>
                     <FormGroup>
+                    <Label for="post-name" className="h2">Add Country</Label>
                         <Input type="text" onChange={this.handleTextChange} name="name" id="name"></Input>
                     </FormGroup>
                     <Button color="warning" id="submit" name="submit" onClick={this.handlePost}>Add Country</Button>
@@ -152,6 +154,12 @@ class Countries extends React.Component {
                 method: 'POST',
                 body: formData
             })
+                .then(response => response.text())
+                .then(response => ReactDOM.render(
+                    <div><p>Post Status: {this.addCountry.value} <br></br>{response}</p></div>,
+                    document.getElementById('postMessage')
+                ));
+                
         }
     }
 
@@ -163,7 +171,7 @@ class Countries extends React.Component {
         })
             .then(res => res.text()) // or res.json() or res.text()
             .then(res => ReactDOM.render(
-                <div><p>Delete Status: {this.specificCountry.countryObject.name} <br></br>{res}</p></div>,
+                <div><p>Delete Status: {this.specificCountry.countryObject.name} <br></br>{res}</p><hr></hr></div>,
                 document.getElementById('deleteMessage')
             ));
     }
@@ -203,7 +211,7 @@ class Countries extends React.Component {
                     {this.createPostInputs()}
                     <Form>
                         <FormGroup>
-                            <Label for="select-name">Select Country</Label>
+                            <Label for="select-name" className="h2">Select Country</Label>
                             <Input type="select" onChange={this.handleChangeInput} ref="countryName" name="countryName" id="countryName">
                                 <option value="all"></option>
                                 {countries.map(country => {
