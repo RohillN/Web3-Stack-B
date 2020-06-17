@@ -8,8 +8,10 @@ function App() {
     return (
         <div>
             <AppNavbar />
-            <LikeButton />
+            {/* <LikeButton /> */}
+            <div className="container">
             <Countries />
+            </div>
         </div>
     );
 }
