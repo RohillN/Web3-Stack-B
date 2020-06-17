@@ -230,7 +230,7 @@ class Countries extends React.Component {
                                 })}
                             </Input>
                         </FormGroup>
-                        <Button onClick={this.handleSelection}>Find Country</Button>
+                        <Button color="success" onClick={this.handleSelection}>Find Country</Button>
                     </Form>
                     <hr></hr>
                 </div>
