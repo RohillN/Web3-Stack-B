@@ -1,20 +1,12 @@
 import { Button } from "reactstrap";
 
+// checks if the state is true or false on button click
+// if true, then display the about message 
+// if false just display a button 
 class About extends React.Component {
     constructor(props) {
         super(props);
         this.state = { liked: false };
-    }
-
-    callHideButton() {
-        return (
-            <div>
-                <p>You liked this.</p>
-                <Button color="danger" onClick={() => this.setState({ liked: false })}>
-                    Hide
-            </Button>
-            </div>
-        );
     }
 
     render() {

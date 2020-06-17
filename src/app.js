@@ -6,6 +6,7 @@ import About from './components/about';
 
 function App() {
 
+    //will return the navbar, about and countries componets to the index.js
     return (
         <div>
             <AppNavbar />
