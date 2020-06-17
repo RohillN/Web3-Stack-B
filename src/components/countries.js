@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Form, FormGroup, Label, Button, Input } from 'reactstrap';
-import SingleCountry from '../components/singlecountry';
 
 class Countries extends React.Component {
     constructor(props) {
@@ -97,6 +96,12 @@ class Countries extends React.Component {
                 );
             }
         }
+        else {
+            ReactDOM.render(
+                <div><p>Country does not exist: {this.specificCountry.countryObject.name}</p><hr></hr></div>,
+                document.getElementById('showSingle')
+            );
+        }
     }
 
     newDeleteOption() {
@@ -174,6 +179,8 @@ class Countries extends React.Component {
                 <div><p>Delete Status: {this.specificCountry.countryObject.name} <br></br>{res}</p><hr></hr></div>,
                 document.getElementById('deleteMessage')
             ));
+        this.specificCountry.isLoadedSingle = false;
+        this.displayCountry();
     }
 
     fetchCountrySpecific() {
