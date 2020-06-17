@@ -17,16 +17,19 @@ class Countries extends React.Component {
             countryObject: null
         }
 
+        // define user input from select menu
         this.userInput = {
             value: "all",
             canShow: false
         }
 
+        // define user input for adding country from text input
         this.addCountry = {
             value: "",
             canPost: false
         }
 
+        // assign variables to be binded to methods
         this.handleSelection = this.handleSelection.bind(this);
         this.handleChangeInput = this.handleChangeInput.bind(this);
         this.handleDelete = this.fetchDeleteCountry.bind(this);
@@ -36,12 +39,16 @@ class Countries extends React.Component {
         this.buttonclicked = false;
     }
 
+    // check is the component mouted
+    // calls the fetch all method
     componentDidMount() {
         this.fetchAllData();
     }
 
+    // fetches all the data
+    // changes the stated to loaded is true
     fetchAllData() {
-        fetch("http://127.0.0.1:5000/getcountries")
+        fetch("http://10.25.100.26/getcountries")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -50,9 +57,6 @@ class Countries extends React.Component {
                         countries: result
                     });
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -62,6 +66,8 @@ class Countries extends React.Component {
             )
     }
 
+    // checks if the sepecifc country fetch is loaded
+    // if true then call the display and delete methods
     handleSelection() {
         console.log("button click");
         console.log(this.userInput.value);
@@ -72,6 +78,8 @@ class Countries extends React.Component {
         }
     }
 
+    // on every event change, store the value and set canshow to true
+    // if canshow is true then call the fetch single country method
     handleChangeInput(e) {
         this.userInput.value = e.target.value;
         this.userInput.canShow = true;
@@ -80,6 +88,10 @@ class Countries extends React.Component {
         }
     }
 
+    // display the country return the a dom render
+    // checks if specific country is loaded
+    // if load is true then display the country data
+    // else, output error message displaying that country does not exist
     displayCountry() {
         if (this.specificCountry.isLoadedSingle) {
             if (this.specificCountry.countryObject == null) {
@@ -90,7 +102,7 @@ class Countries extends React.Component {
             }
             else {
                 ReactDOM.render(
-                    <div><p key={this.specificCountry.countryObject.name}>{JSON.stringify(this.specificCountry.countryObject)}</p><hr></hr>
+                    <div className="format-country"><p key={this.specificCountry.countryObject.name}>{JSON.stringify(this.specificCountry.countryObject)}</p><hr></hr>
                     </div>,
                     document.getElementById('showSingle')
                 );
@@ -104,6 +116,8 @@ class Countries extends React.Component {
         }
     }
 
+    // dom render an input field with the current country that has been searched for
+    // on click will call the handle delete method
     newDeleteOption() {
         ReactDOM.render(
             <div>
@@ -122,6 +136,8 @@ class Countries extends React.Component {
         );
     }
 
+    // dom render input text field, input on change will call handletextchange
+    // on button click call the handlepost method that will run the fetch
     createPostInputs() {
         ReactDOM.render(
             <div>
@@ -137,6 +153,9 @@ class Countries extends React.Component {
         );
     }
 
+    // will save any text input from the event
+    // if the input is not null then canpost will equal true
+    // logs all the changes 
     handleTextChange(e) {
         // e.preventDefault();
         this.addCountry.value = e.target.value;
@@ -146,6 +165,9 @@ class Countries extends React.Component {
         console.log(this.addCountry.value);
     }
 
+    // fetch the post api
+    // api accepts form-data, created formdata object with key value pair
+    // output the response after the fetch
     fetchPostCountry() {
         const formData = new FormData();
         formData.append('name', this.addCountry.value.toString());
@@ -155,7 +177,7 @@ class Countries extends React.Component {
         if (this.addCountry.canPost) {
             console.log("posting this country");
             console.log(this.addCountry.value);
-            fetch('http://127.0.0.1:5000/getcountries', {
+            fetch('http://10.25.100.26/getcountries', {
                 method: 'POST',
                 body: formData
             })
@@ -168,10 +190,15 @@ class Countries extends React.Component {
         }
     }
 
+    // fetch the delete api
+    // with the fetch attach the country name to the end
+    // then get the response and dom render back to the screen
+    // set the specifc country loaded to false
+    // recall the display country method
     fetchDeleteCountry() {
         console.log("delete this country");
         console.log(this.specificCountry.countryObject.name);
-        fetch('http://127.0.0.1:5000/getcountries/' + this.specificCountry.countryObject.name, {
+        fetch('http://10.25.100.26/getcountries/' + this.specificCountry.countryObject.name, {
             method: 'DELETE',
         })
             .then(res => res.text()) // or res.json() or res.text()
@@ -183,13 +210,16 @@ class Countries extends React.Component {
         this.displayCountry();
     }
 
+    // fetch specific country api
+    // attach the name of country to the end of the api route
+    // if success, set is loaded to true and store the result to the object
     fetchCountrySpecific() {
 
         this.name = this.userInput.value;
         console.log("fetching: " + this.name);
         if (this.userInput.canShow == true) {
 
-            fetch("http://127.0.0.1:5000/getcountries/" + this.name)
+            fetch("http://10.25.100.26/getcountries/" + this.name)
                 .then(res => res.json())
                 .then(
                     (result) => {
@@ -205,6 +235,11 @@ class Countries extends React.Component {
         }
     }
 
+    // first check is there is any errors, if not checks if its loaded, else display input and button
+    // render the countries into a dropdown select input 
+    // on change of the select input will call handlechangeinput method
+    // map through each country in the countries array, return a option element with the country name
+    // create a button with on click method will call handle selection method
     render() {
         const { error, isLoaded, countries } = this.state;
         if (error) {
@@ -230,7 +265,7 @@ class Countries extends React.Component {
                                 })}
                             </Input>
                         </FormGroup>
-                        <Button onClick={this.handleSelection}>Find Country</Button>
+                        <Button color="success" onClick={this.handleSelection}>Find Country</Button>
                     </Form>
                     <hr></hr>
                 </div>

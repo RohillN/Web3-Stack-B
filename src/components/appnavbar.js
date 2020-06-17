@@ -29,9 +29,6 @@ const AppNavbar = (props) => {
                         <NavItem>
                             <NavLink href="/">Home</NavLink>
                         </NavItem>
-                        <NavItem>
-                            <NavLink href="/about">About</NavLink>
-                        </NavItem>
                     </Nav>
                     <NavbarText>Stack B - MERN</NavbarText>
                 </Collapse>
