@@ -6,10 +6,16 @@ This project has been created using **webpack scaffold**, you can now run
 npm run build
 ```
 
-or
+or 
 
 ```
-yarn build
+npm install
+```
+
+then
+
+```
+npm run deploy
 ```
 
 to bundle your application
