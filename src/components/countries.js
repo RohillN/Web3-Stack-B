@@ -52,10 +52,11 @@ class Countries extends React.Component {
     // fetches all the data
     // changes the stated to loaded is true
     fetchAllData() {
-        fetch("http://10.25.100.26/getcountries")
+        fetch("http://127.0.0.1:5000/getcountries")
             .then(res => res.json())
             .then(
                 (result) => {
+                    localStorage.setItem('data', JSON.stringify(result)),
                     this.setState({
                         isLoaded: true,
                         countries: result
@@ -88,8 +89,15 @@ class Countries extends React.Component {
         this.userInput.value = e.target.value;
         this.userInput.canShow = true;
         if (this.userInput.canShow) {
-            this.fetchCountrySpecific();
+            //this.fetchCountrySpecific();
+            this.fetchFromLocalStorage();
         }
+    }
+
+    fetchFromLocalStorage()
+    {
+        this.temp = localStorage.getItem('data');
+        console.log(this.temp);
     }
 
     // display the country return the a dom render
