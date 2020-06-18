@@ -29,6 +29,10 @@ class Countries extends React.Component {
             canPost: false
         }
 
+        this.resetInput = {
+            valueReset: this.handleTextChange
+        }
+
         // assign variables to be binded to methods
         this.handleSelection = this.handleSelection.bind(this);
         this.handleChangeInput = this.handleChangeInput.bind(this);
@@ -143,7 +147,7 @@ class Countries extends React.Component {
             <div>
                 <Form>
                     <FormGroup>
-                    <Label for="post-name" className="h2">Add Country</Label>
+                        <Label for="post-name" className="h2">Add Country</Label>
                         <Input type="text" onChange={this.handleTextChange} name="name" id="name"></Input>
                     </FormGroup>
                     <Button color="warning" id="submit" name="submit" onClick={this.handlePost}>Add Country</Button>
@@ -153,15 +157,24 @@ class Countries extends React.Component {
         );
     }
 
+    // checks if the button is clicked
+    // if clicked, will reset the value and text input
+    // else not clicked
     // will save any text input from the event
     // if the input is not null then canpost will equal true
     // logs all the changes 
     handleTextChange(e) {
         // e.preventDefault();
         this.addCountry.value = e.target.value;
-        if (this.addCountry.value != null) {
+        if (this.buttonclicked) {
+            e.preventDefault();
+            e.target.value = "";
+            this.addCountry.value = "";
+        }
+        else {
             this.addCountry.canPost = true;
         }
+        this.buttonclicked = false;
         console.log(this.addCountry.value);
     }
 
@@ -169,6 +182,7 @@ class Countries extends React.Component {
     // api accepts form-data, created formdata object with key value pair
     // output the response after the fetch
     fetchPostCountry() {
+        this.buttonclicked = true;
         const formData = new FormData();
         formData.append('name', this.addCountry.value.toString());
 
@@ -186,7 +200,6 @@ class Countries extends React.Component {
                     <div><p>Post Status: {this.addCountry.value} <br></br>{response}</p></div>,
                     document.getElementById('postMessage')
                 ));
-                
         }
     }
 
