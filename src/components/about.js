@@ -36,6 +36,8 @@ class About extends React.Component {
                             <li>At the bottom you will see a input field on adding a country.</li>
                             <li>Simply type in the country name you want to add.</li>
                             <li>If 'Add Country' button is clicked. You will see the new country object that had been saved.</li>
+                            <li>Repeat the process to add another country.</li>
+                            <li>Note: You will not need to clear the text when entering new record, just click on the text area with the existing text and start typing. By default the text area will clear automatically.</li>
                         </ul>
                     </div>
                     <br></br>
