@@ -52,7 +52,7 @@ class Countries extends React.Component {
     // fetches all the data
     // changes the stated to loaded is true
     fetchAllData() {
-        fetch("http://127.0.0.1:5000/getcountries")
+        fetch("http://10.25.100.26/getcountries")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -191,7 +191,7 @@ class Countries extends React.Component {
         if (this.addCountry.canPost) {
             console.log("posting this country");
             console.log(this.addCountry.value);
-            fetch('http://127.0.0.1:5000/getcountries', {
+            fetch('http://10.25.100.26/getcountries', {
                 method: 'POST',
                 body: formData
             })
@@ -211,7 +211,7 @@ class Countries extends React.Component {
     fetchDeleteCountry() {
         console.log("delete this country");
         console.log(this.specificCountry.countryObject.name);
-        fetch('http://127.0.0.1:5000/getcountries/' + this.specificCountry.countryObject.name, {
+        fetch('http://10.25.100.26/getcountries/' + this.specificCountry.countryObject.name, {
             method: 'DELETE',
         })
             .then(res => res.text()) // or res.json() or res.text()
@@ -232,7 +232,7 @@ class Countries extends React.Component {
         console.log("fetching: " + this.name);
         if (this.userInput.canShow == true) {
 
-            fetch("http://127.0.0.1:5000/getcountries/" + this.name)
+            fetch("http://10.25.100.26/getcountries/" + this.name)
                 .then(res => res.json())
                 .then(
                     (result) => {
